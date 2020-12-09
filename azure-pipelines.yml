@@ -4,18 +4,37 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  - master
+  # - releases/*
+  
+  # pr:
+  #   - master
+  #   - releases/*
+  
+  # strategy:
+  #   matrix:
+  #     ubuntu:
+  #       imageName: "ubuntu-16.04"
+  #     windows:
+  #       imageName: "vs2017-win2016"
+  #   maxParallel: 2
+  
+  # pool:
+  #   vmImage: $(imageName)
 
-pool:
-  vmImage: 'ubuntu-latest'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  pool:
+    vmImage: 'ubuntu-latest'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+  
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'
+  
